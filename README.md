@@ -127,7 +127,15 @@ docker-compose exec app php artisan serve
 
 and access the website on your local website with this url localhost:8000.
 
-# Tailing Logs
+# PHPUnit Tests
+
+In the app root folder run this command in the terminal
+
+```shell
+docker-compose exec app ./vendor/bin/phpunit
+```
+
+# Logs
 
 In the app root folder run this command in the terminal
 
