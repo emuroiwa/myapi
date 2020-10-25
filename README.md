@@ -1,61 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# MyApi
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A tutorial on how it was made is avaiable here
+http://www.ernestmuroiwa.com/dockerized-laravel-rest-api/
 
-## About Laravel
+http://www.ernestmuroiwa.com/laravel-rest-api/
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+MyApi app made with Laravel 8 and Mysql DB
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Docker
+-   Docker composer
 
-## Learning Laravel
+To get started, make sure you have [Docker installed](https://docs.docker.com/docker-for-linux/install/) on your system, and then clone this repository.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Setup
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+You need to clone the project to create a local copy on your system.
+Run the following on your terminal:
 
-## Laravel Sponsors
+```
+git clone https://github.com/emuroiwa/myapi
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Then change into the project's directory by running the following on your terminal:
 
-### Premium Partners
+```
+cd myapi
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+```
 
-## Contributing
+# Configurations
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+After complete setup process you have to configure you database credentials. First copy `.env.example` as `.env`
 
-## Code of Conduct
+```shell
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```shell
+nano .env
+```
 
-## Security Vulnerabilities
+Set up DB details
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+APP_NAME=myapi
+APP_ENV=dev
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
 
-## License
+LOG_CHANNEL=stack
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=myapi
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
+Then you can span up your containers by running
+
+```shell
+docker-compose up -d
+```
+
+You containers should be up and running hopefully. Now we have to set directory permissions
+Navigate out of the root folder
+
+```shell
+cd ..
+```
+
+Then run these commands
+
+```shell
+sudo chown -R $USER:www-data myapi/ -R
+chmod 775 myapi/ -R
+```
+
+Return back to the root folder
+
+```shell
+cd ./myapi
+```
+
+You need to run `composer update` to install application dependencies
+
+```shell
+docker-compose exec app composer install
+```
+
+To generate key please run this:
+
+```
+docker-compose exec app php artisan key:generate
+```
+
+Now open `.env` file and write database informations. Then run migrate from you terminal
+
+```shell
+docker-compose exec app php artisan migrate
+```
+
+Now run the DB seeder
+
+```shell
+docker-compose exec app php artisan db:seed
+```
+
+Laravel passport config
+
+```shell
+docker-compose exec app php artisan passport:install
+```
+
+# Running the project
+
+Run the following on your on your terminal:
+
+```
+docker-compose exec app php artisan serve
+```
+
+and access the website on your local website with this url localhost:8000.
+
+# Tailing Logs
+
+In the app root folder run this command in the terminal
+
+```shell
+tail ./storage/logs/\*\* -f
+```
