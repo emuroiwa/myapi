@@ -1,9 +1,14 @@
 # MyApi
 
 A tutorial on how it was made is avaiable here
+
 http://www.ernestmuroiwa.com/dockerized-laravel-rest-api/
 
 http://www.ernestmuroiwa.com/laravel-rest-api/
+
+Go to the postman collection on this link to view the endpoints
+
+https://documenter.getpostman.com/view/8975783/TVYF8Ja3
 
 MyApi app made with Laravel 8 and Mysql DB
 
