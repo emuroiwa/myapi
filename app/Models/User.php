@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function purchase()
     {
-       return $this->belongsToMany(Purchase::class, 'purchases', 'user_id', 'product_sku')
-                    ->withTimeStamps();
+        return $this->belongsToMany(Purchase::class, 'purchases', 'user_id', 'product_sku')
+            ->withTimeStamps();
     }
 }

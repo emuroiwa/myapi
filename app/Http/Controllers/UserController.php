@@ -18,10 +18,9 @@ class UserController extends Controller
     public function index()
     {
         Log::debug(__METHOD__ . ' bof');
+
         try {
-
             $data = User::all();
-
         } catch (ModelNotFoundException $exception) {
             Log::error(__METHOD__ . ' ' . $exception->getMessage());
             return response()->json([
@@ -46,6 +45,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         Log::debug(__METHOD__ . ' bof');
+
         try {
             //validate
             $request->validate([
@@ -55,8 +55,7 @@ class UserController extends Controller
 
             $user = User::find($request['user_id']);
             $product_sku = $request['product_sku'];
-            $res = $user->purchase()->attach($product_sku);
-
+            $user->purchase()->attach($product_sku);
         } catch (Exception $exception) {
             Log::error(__METHOD__ . ' ' . $exception->getMessage());
             return response()->json([
@@ -64,11 +63,11 @@ class UserController extends Controller
                 "data" => $exception->getMessage()
             ], 400);
         }
-        Log::debug(__METHOD__ . ' eof');
 
+        Log::debug(__METHOD__ . ' eof');
         return response()->json([
             "status" => 'success',
-            "data" => $res
+            "data" => 'Data Created'
         ], 200);
     }
 
@@ -81,11 +80,12 @@ class UserController extends Controller
     public function show(User $user)
     {
         Log::debug(__METHOD__ . ' bof');
+
         try {
-        $purchases = $user->join('purchases', 'users.id', '=', 'purchases.user_id')
-                    ->join('products','products.sku', '=', 'purchases.product_sku')
-                    ->select('products.sku','products.name')
-                    ->get();
+            $purchases = $user->join('purchases', 'users.id', '=', 'purchases.user_id')
+                ->join('products', 'products.sku', '=', 'purchases.product_sku')
+                ->select('products.sku', 'products.name')
+                ->get();
         } catch (Exception $exception) {
             Log::error(__METHOD__ . ' ' . $exception->getMessage());
             return response()->json([
@@ -112,8 +112,7 @@ class UserController extends Controller
         Log::debug(__METHOD__ . ' bof');
         try {
 
-            $res = $user->purchase()->detach($sku);
-
+            $user->purchase()->detach($sku);
         } catch (Exception $exception) {
             Log::error(__METHOD__ . ' ' . $exception->getMessage());
             return response()->json([
@@ -125,7 +124,7 @@ class UserController extends Controller
 
         return response()->json([
             "status" => 'success',
-            "data" => $res
+            "data" => 'Data removed'
         ], 200);
     }
 }

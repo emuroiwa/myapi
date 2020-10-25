@@ -19,7 +19,6 @@ class ProductController extends Controller
         try {
 
             $data = Product::all();
-
         } catch (ModelNotFoundException $exception) {
             Log::error(__METHOD__ . ' ' . $exception->getMessage());
             return response()->json([
@@ -33,6 +32,5 @@ class ProductController extends Controller
             "status" => 'success',
             "data" => $data
         ], 200);
-
     }
 }

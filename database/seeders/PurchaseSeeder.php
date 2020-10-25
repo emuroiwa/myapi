@@ -18,7 +18,7 @@ class PurchaseSeeder extends Seeder
         foreach (array_slice(glob($filePath), 0, 2) as $file) {
             $data = array_map('str_getcsv', file($file));
 
-            foreach ($data as $row) {
+            foreach (array_slice($data, 1) as $row) {
                 Purchase::create([
                     'user_id' => $row[0],
                     'product_sku' => $row[1],

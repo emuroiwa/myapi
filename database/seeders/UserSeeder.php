@@ -15,16 +15,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $filePath = storage_path("fixtures//users.csv");
+        $filePath = storage_path("fixtures/users.csv");
         foreach (array_slice(glob($filePath), 0, 2) as $file) {
             $data = array_map('str_getcsv', file($file));
 
-            foreach ($data as $row) {
-                $user = User::create([
-                        'name' => $row[1],
-                        'email' => $row[2],
-                        'password' => Hash::make($row[3]),
-                    ]);
+            foreach (array_slice($data, 1) as $row) {
+                User::create([
+                    'name' => $row[1],
+                    'email' => $row[2],
+                    'password' => Hash::make($row[3]),
+                ]);
             }
         }
     }

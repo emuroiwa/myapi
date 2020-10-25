@@ -18,11 +18,11 @@ class ProductSeeder extends Seeder
         foreach (array_slice(glob($filePath), 0, 2) as $file) {
             $data = array_map('str_getcsv', file($file));
 
-            foreach ($data as $row) {
-                $user = Product::create([
-                        'sku' => $row[0],
-                        'name' => $row[1],
-                    ]);
+            foreach (array_slice($data, 1) as $row) {
+                Product::create([
+                    'sku' => $row[0],
+                    'name' => $row[1],
+                ]);
             }
         }
     }
