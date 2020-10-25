@@ -1,6 +1,6 @@
 # MyApi
 
-A tutorial on how it was made is avaiable here
+A tutorial on how it was made is avaliable here
 
 http://www.ernestmuroiwa.com/dockerized-laravel-rest-api/
 
