@@ -6,7 +6,7 @@ http://www.ernestmuroiwa.com/dockerized-laravel-rest-api/
 
 http://www.ernestmuroiwa.com/laravel-rest-api/
 
-Go to the postman collection on this link to view the endpoints
+**Go to the postman collection on this link to view the endpoints**
 
 https://documenter.getpostman.com/view/8975783/TVYF8Ja3
 
