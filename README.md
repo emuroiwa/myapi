@@ -92,7 +92,7 @@ Return back to the root folder
 cd ./myapi
 ```
 
-You need to run `composer update` to install application dependencies
+You need to run `composer install` to install application dependencies
 
 ```shell
 docker-compose exec app composer install
